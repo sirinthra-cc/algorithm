@@ -23,19 +23,21 @@
 
 using namespace std;
 
-int dfs(vector<vector<int>> &grid, int i, int j, unordered_map<pair<int, int>, int> &region_elements, int sum){
+int dfs(vector<vector<int>> &grid, int i, int j, vector<pair<int, int>> &region_elements){
     for(int grid_i=i-1; grid_i<=i+1; grid_i++){
        for(int grid_j=j-1; grid_j<=j+1; grid_j++){
-          if(grid_i != i && grid_j != j && grid[grid_i][grid_j] == 1){
+           if(grid_i<0 || grid_i>=grid.size() || grid_j<0 || grid_j>=grid[0].size()) return 0;
+           if(!(grid_i==i && grid_j==j) && grid[grid_i][grid_j]==1){
               pair<int, int> new_pair = make_pair(grid_i, grid_j);
-              if(region_elements.find(new_pair) == region_elements.end()){
-                  region_elements[new_pair] = 1;
-                  sum += dfs(grid, grid_i, grid_j, region_elements, sum);
+              if(find(region_elements.begin(), region_elements.end(), new_pair) == region_elements.end()){
+                  region_elements.push_back(new_pair);
+                  // cout << "(" << grid_i << "," << grid_j << ") ";
+                  dfs(grid, grid_i, grid_j, region_elements);
               } 
-          }
+           }
        }
     }
-    return sum;
+    return region_elements.size();
 }
 
 int get_biggest_region(vector<vector<int>> &grid) {
@@ -43,8 +45,11 @@ int get_biggest_region(vector<vector<int>> &grid) {
     for(int grid_i=1; grid_i<grid.size(); grid_i++){
        for(int grid_j=1; grid_j<grid[0].size(); grid_j++){
           if(grid[grid_i][grid_j] == 1){
-              unordered_map<pair<int, int>, int> region_elements;
-              int region = dfs(grid, grid_i, grid_j, region_elements, 1);
+              vector<pair<int, int>> region_elements;
+              pair<int, int> new_pair = make_pair(grid_i, grid_j);
+              // cout << endl << "(" << grid_i << "," << grid_j << ") ";
+              region_elements.push_back(new_pair);
+              int region = dfs(grid, grid_i, grid_j, region_elements);
               if(region > biggest_region) biggest_region = region;
           }
        }
