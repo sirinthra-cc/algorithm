@@ -19,6 +19,8 @@
         "unordered_map": "cpp",
         "utility": "cpp",
         "memory": "cpp",
-        "__locale": "cpp"
+        "__locale": "cpp",
+        "iostream": "cpp",
+        "ostream": "cpp"
     }
 }
