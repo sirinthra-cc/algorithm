@@ -21,6 +21,9 @@
         "memory": "cpp",
         "__locale": "cpp",
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "__bit_reference": "cpp",
+        "algorithm": "cpp",
+        "chrono": "cpp"
     }
 }
