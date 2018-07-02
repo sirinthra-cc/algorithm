@@ -6,24 +6,14 @@
 using namespace std;
 
 
-int graph_count(int current_language, vector<set<int>> &graph, 
+void graph_count(int current_language, vector<set<int>> &graph, 
                 vector<bool> &checked_languages, vector<bool> &valid_languages){
-    if(valid_languages[current_language] && graph[current_language].size() == 0) return 1;
-    else if(graph[current_language].size() == 0) return 0;
-    int element_count = 1;
-    bool is_new_language = false;
-
+    checked_languages[current_language] = true;
     for(auto language: graph[current_language]){
         if(!checked_languages[language]){
-            // cout << language << endl;
-            is_new_language = true;
-            checked_languages[language] = true; 
-            element_count += graph_count(language, graph, checked_languages, valid_languages);
-            // cout << "count " << element_count << endl;
+            graph_count(language, graph, checked_languages, valid_languages);
         }
     }
-    if (!is_new_language) return 0;
-    return element_count;
 }
 
 int main(){
@@ -56,8 +46,10 @@ int main(){
     // get the number of graph
     vector<bool> checked_languages(n_languages+1);
     for(int i=1; i<=n_languages; i++){
-        int element_count = graph_count(i, graph, checked_languages, valid_languages);
-        if(element_count!=0) count++;
+        if(valid_languages[i] && !checked_languages[i]){
+            count++;
+            graph_count(i, graph, checked_languages, valid_languages);
+        }
     }
     if(count!=0)
         cout << count + zero_count - 1 << endl;
