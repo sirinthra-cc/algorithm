@@ -8,7 +8,7 @@ int index_of(vector<int> a, int wanted_number){
     int middle;
     while(first < last) {
         middle = (first + last) / 2;
-        if(a[middle] < wanted_number) last = middle;
+        if(wanted_number <= a[middle]) last = middle;
         else first = middle + 1;       
     }
     // if not found - first = index of next greater value
