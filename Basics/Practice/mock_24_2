@@ -1,0 +1,22 @@
+[1, 2, 4, 4, 5, 6, 9]
+Find 4
+ 0  1  2  3  4  5  6
+[1, 4, 4, 4, 4, 6, 9]
+[         *         ]
+[   *      ]  
+      [*   ]
+      [*]
+
+int get_index(vector<int> &arr, int wanted_number){
+    wanted_number++;
+    int first = 0
+    int last = arr.size() - 1;
+    int mid;
+    while(first < last){
+        mid = (first + last) / 2;  // 3
+        if(wanted_number <= arr[mid]) last = mid;
+        else first = mid + 1;
+    }
+    if(arr[first-1] != wanted_number-1) return -1;
+    return first-1;
+}
