@@ -1,7 +1,8 @@
 // DFS from A to B
 
 
-bool dfs(vector<vector<int>> &graph, vector<bool> &visited_nodes, int current_node, int &target_node, vector<int> &parent_nodes){
+bool dfs(vector<vector<int>> &graph, vector<bool> &visited_nodes, int current_node, int &target_node, 
+        vector<int> &parent_nodes){
     visited_nodes[current_node] = true;
     if(current_node == target_node) return true;
     bool found = false;
@@ -24,6 +25,7 @@ void get_path(vector<vector<int>> &graph, vector<bool> &visited_nodes, int start
         int i = target_node;
         while(i != start_node){
             result.append(i);
+            i = parent_nodes[i];
         }
         for(int j=result.size()-1; j>=0; j--){
             cout << result[j] << " ";
